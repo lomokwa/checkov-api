@@ -21,7 +21,7 @@ export async function addTask(req, res) {
     const { title, uid } = req.body;
 
     if(!title || !uid) {
-        res.status(401).send({ success: false, message: "Invalid request"})
+        res.status(401).send({ success: false, message: "Invalid Request"})
         return;
     };
 
@@ -43,11 +43,10 @@ export async function updateTask(req, res) {
     const { done, id } = req.body;
 
     if (!uid) {
-        res.status(401).send({ success: false, message: "Invalid request"})
+        res.status(401).send({ success: false, message: "Invalid Request"})
     };
 
     const updateTask = {
-        id,
         done,
         updatedAt: FieldValue.serverTimestamp()
     };
@@ -56,3 +55,17 @@ export async function updateTask(req, res) {
 
     getTasks(req, res);
 };
+
+export async function deleteTask(req, res) {
+    const { uid } = req.params;
+    const { id } = req.body;
+
+    if(!uid || !id){
+        res.status(401).send({ success: false, message: "Invalid Request"})
+    };
+
+    await coll.doc(id).delete();
+
+    getTasks(req, res);
+};
+    
