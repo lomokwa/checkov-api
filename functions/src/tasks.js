@@ -11,6 +11,7 @@ export async function getTasks(req, res) {
 
     const taskArray = tasks.docs.map(doc => { return({ id: doc.id, ...doc.data() });
  } );
+ 
     res.send(taskArray)
 
     //res.send(toArray(tasks))
@@ -30,7 +31,9 @@ export async function addTask(req, res) {
         done: false, 
         createdAt: FieldValue.serverTimestamp(),
     };
+    
     await coll.add(newTask);
+
     getTasks(req, res);
 
 }
@@ -47,7 +50,7 @@ export async function updateTask(req, res) {
         updatedAt: FieldValue.serverTimestamp()
     };
 
-    await coll.doc(id).update(updateTask)
+    await coll.doc(id).update(updateTask);
 
     getTasks(req, res);
 };
