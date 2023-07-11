@@ -39,6 +39,7 @@ export async function addTask(req, res) {
 }
 
 export async function updateTask(req, res) {
+    const { uid } = req.params;
     const { done, id } = req.body;
 
     if (!uid) {
@@ -46,6 +47,7 @@ export async function updateTask(req, res) {
     };
 
     const updateTask = {
+        id,
         done,
         updatedAt: FieldValue.serverTimestamp()
     };
